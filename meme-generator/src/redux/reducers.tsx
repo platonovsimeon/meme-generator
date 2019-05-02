@@ -2,21 +2,20 @@ import {GET_TEMPLATES} from "./constants";
 import {AppAction} from "./actions";
 
 
-export interface State{
+export interface ClientState{
   templates: string[],
   hasTemplates:boolean
 }
-const initialState:State ={
+export interface AppState{
+  processAction:ClientState
+}
+const initialState:ClientState ={
   templates:[],
   hasTemplates:false
 }
-export const processAction = (state=initialState,action:AppAction):State => {
+export const processAction = (state=initialState,action:AppAction):ClientState => {
     switch(action.type){
       case GET_TEMPLATES:
-        if(state.hasTemplates){
-          return state;
-        }
-        
         return {...state,templates:action.payload, hasTemplates:true};
 
       default:

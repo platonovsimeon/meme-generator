@@ -1,16 +1,28 @@
 import React, { Component } from 'react';
 import {getTemplates,AppAction} from "./redux/actions";
+import {AppState,ClientState} from "./redux/reducers";
+import {connect} from "react-redux";
 import {Dispatch} from "redux";
-import {connect} from "react-redux"
 import './App.css';
 
+interface Props{
+  onGetTemplates():string[],
+  templates:string[],
+  hasTemplates:boolean
+}
 
-const mapStateToProps = (state:any)=>{
+interface AppActionDispatch{
+  (action:any):any
+}
+
+const mapStateToProps = (state:AppState):ClientState=>{
   return {
-    templates : state.processAction.templates
+    templates : state.processAction.templates,
+    hasTemplates : state.processAction.hasTemplates
   }
 }
-const mapDispatchToProps=(dispatch:any)=>{
+const mapDispatchToProps=(dispatch:AppActionDispatch)=>{
+
   return{
     onGetTemplates:()=>dispatch(getTemplates())
 
@@ -18,11 +30,14 @@ const mapDispatchToProps=(dispatch:any)=>{
 
 }
 
-const App = (props:any)=> {
+
+const App = (props:Props)=> {
+    const {templates,hasTemplates,onGetTemplates} = props;
+    if(!hasTemplates){
+      onGetTemplates();
+    }
 
 
-    props.onGetTemplates();
-    const {templates} = props;
     return (
       <div className="App">
 

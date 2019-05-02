@@ -5,8 +5,9 @@ export interface GetTemplates{
   payload: string[]
 }
 
+
 export type AppAction = GetTemplates;
-export const getTemplates = ()=>(dispatch:any)=> {
+export const getTemplates = ()=>(dispatch:Dispatch<GetTemplates>)=> {
     fetch("https://api.imgflip.com/get_memes").then(response=>response.json()).then(data=>{
       const templates = data.data.memes.map((meme:any)=>meme.id);
       dispatch({type:GET_TEMPLATES,payload:templates});
