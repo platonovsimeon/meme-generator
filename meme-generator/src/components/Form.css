@@ -1,0 +1,17 @@
+.Form{
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+
+
+}
+
+#imageInput{
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.default-button{
+  
+}

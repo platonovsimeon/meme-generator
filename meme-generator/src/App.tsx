@@ -1,13 +1,55 @@
 import React from 'react';
-
+import {getTemplates,AppAction} from "./redux/actions";
+import {AppState,ClientState} from "./redux/reducers";
+import {connect} from "react-redux";
+import {Dispatch} from "redux";
 import './App.css';
 
-const App = () => {
-  return (
-    <div className="App">
+import Form from "./components/Form";
 
-    </div>
-  );
+interface Props{
+  onGetTemplates():string[],
+  templates:string[],
+  hasTemplates:boolean
 }
 
-export default App;
+interface AppActionDispatch{
+  (action:any):any
+}
+
+const mapStateToProps = (state:AppState):ClientState=>{
+  return {
+    templates : state.processAction.templates,
+    hasTemplates : state.processAction.hasTemplates
+  }
+}
+const mapDispatchToProps=(dispatch:AppActionDispatch)=>{
+
+  return{
+    onGetTemplates:()=>dispatch(getTemplates())
+
+  }
+
+}
+
+
+const App = (props:Props)=> {
+    const {templates,hasTemplates,onGetTemplates} = props;
+    if(!hasTemplates){
+      onGetTemplates();
+    }
+
+
+    return (
+      <div className="App">
+        <Form/>
+      </div>
+    );
+
+
+
+
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);
