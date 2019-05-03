@@ -25,8 +25,10 @@ export const processAction = (state=initialState,action:AppAction):ClientState =
       case GET_MEMES:
 
         state.memes.push(action.payload);
-
-        return {...state,view:"design"};
+        if(action.stop){
+          return {...state,view:"design"}
+        }
+        return {...state};
       default:
         return state;
     }
