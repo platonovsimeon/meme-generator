@@ -13,8 +13,8 @@
   height: 0;
 }
 
-.default-button{
-  width: 20rem;
+.generate-button{
+  width: 18rem;
   height: 3rem;
   margin-top: 10px;
   background-color: #77a0a9;
@@ -27,6 +27,10 @@
   font-size: 1.2rem;
 }
 
-.default-button:hover{
+.generate-button:hover{
   background-color: #6f7d8c;
+}
+.meme-text-field{
+  height: 1.5rem;
+
 }

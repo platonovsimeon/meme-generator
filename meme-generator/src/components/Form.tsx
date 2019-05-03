@@ -17,8 +17,8 @@ const Form = (props:Props)=> {
     return (
       <div className="Form">
         <h1>Meme generator</h1>
-        <input onChange={onNameChange} type="text" placeholder="Enter meme text"/>
-        <button onClick={click} className="default-button">Generate</button>
+        <input className="meme-text-field" onChange={onNameChange} type="text" placeholder="Enter meme text"/>
+        <button onClick={click} className="generate-button">Generate</button>
 
       </div>
     );
