@@ -1,7 +1,8 @@
 .Form{
-  align-self: center;
+  align-self: flex-start;
   display: flex;
   flex-direction: column;
+  color: #fffaff;
 
 
 }
@@ -13,5 +14,19 @@
 }
 
 .default-button{
-  
+  width: 20rem;
+  height: 3rem;
+  margin-top: 10px;
+  background-color: #77a0a9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  color:inherit;
+  font-size: 1.2rem;
+}
+
+.default-button:hover{
+  background-color: #6f7d8c;
 }

@@ -1,15 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import "./Form.css";
 
-const Form = ()=> {
+interface Props{
+  click():void
+}
+const Form = (props:Props)=> {
 
 
 
     return (
       <div className="Form">
-        <button className="default-button"><label htmlFor="imageInput">Choose an image</label></button>
-        <input id="imageInput" accept="image/*" type="file"/>
-        <button className="default-button">Generate</button>
+        <h1>Meme generator</h1>
+        <button onClick={props.click} className="default-button">Generate</button>
+
       </div>
     );
 
