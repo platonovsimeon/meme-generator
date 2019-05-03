@@ -14,13 +14,19 @@ export interface GetTemplates{
 
 export interface GetMeme{
   type: GET_MEMES,
-  payload: string
+  payload: string,
+  stop:boolean
 }
 
 export type AppAction = GetTemplates | GetMeme;
 export const getTemplates = ()=>(dispatch:Dispatch<GetTemplates>)=> {
     fetch("https://api.imgflip.com/get_memes").then(response=>response.json()).then(data=>{
-      const templates = data.data.memes.map((meme:any)=>{
+      let templates = data.data.memes.filter((meme:any)=>{
+
+        return meme.box_count === 2;
+      });
+
+      templates = templates.map((meme:any)=>{
         return {id:meme.id}
       });
       dispatch({type:GET_TEMPLATES,payload:templates});
@@ -30,7 +36,7 @@ export const getTemplates = ()=>(dispatch:Dispatch<GetTemplates>)=> {
 
 
 
-export const getMemes = (templates:MemeTemplate[],name:string)=>(dispatch:Dispatch<GetMeme>) => {
+export const getMemes = (templates:MemeTemplate[],name:string,name2:string)=>(dispatch:Dispatch<GetMeme>) => {
 
   interface Params{
     [key:string]:string;
@@ -42,8 +48,9 @@ export const getMemes = (templates:MemeTemplate[],name:string)=>(dispatch:Dispat
     let params:Params = {
       template_id:id,
       text0:name,
-      username:"simeonplatonov",
-      password:"1234567S"
+      text1:name2,
+      username:"YOUR_IMAGEFLIP_USERNAME",
+      password:"YOUR_IMAGEFLIP_PASSWORD"
 
     };
 
@@ -54,7 +61,7 @@ export const getMemes = (templates:MemeTemplate[],name:string)=>(dispatch:Dispat
     fetch("https://api.imgflip.com/caption_image",{headers:{'Content-Type': "application/x-www-form-urlencoded"},method:"POST",body:bodyParams}).then(response=>response.json())
     .then(data=>{
 
-      dispatch({type:GET_MEMES,payload:data.data.url});
+      dispatch({type:GET_MEMES,payload:data.data.url,stop:i===templates.length-1});
 
     });
   };
