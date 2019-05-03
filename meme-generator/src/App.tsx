@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {getTemplates,AppAction} from "./redux/actions";
 import {AppState,ClientState} from "./redux/reducers";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 import './App.css';
+
+import Form from "./components/Form";
 
 interface Props{
   onGetTemplates():string[],
@@ -40,7 +42,7 @@ const App = (props:Props)=> {
 
     return (
       <div className="App">
-
+        <Form/>
       </div>
     );
 
