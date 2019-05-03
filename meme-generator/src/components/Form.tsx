@@ -1,15 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
 import "./Form.css";
 
-const Form = ()=> {
+interface Props{
+  click(name:string):void
+}
+const Form = (props:Props)=> {
 
+    let name = "";
+    const onNameChange = (event:React.FormEvent<HTMLInputElement>) => {
 
-
+      name=event.currentTarget.value;
+    }
+    const click = () => {
+      props.click(name);
+    }
     return (
       <div className="Form">
-        <button className="default-button"><label htmlFor="imageInput">Choose an image</label></button>
-        <input id="imageInput" accept="image/*" type="file"/>
-        <button className="default-button">Generate</button>
+        <h1>Meme generator</h1>
+        <input onChange={onNameChange} type="text" placeholder="Enter meme text"/>
+        <button onClick={click} className="default-button">Generate</button>
+
       </div>
     );
 
