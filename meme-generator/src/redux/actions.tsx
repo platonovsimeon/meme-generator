@@ -1,6 +1,6 @@
-import {GET_TEMPLATES, GET_DESIGN_VIEW, GET_MEMES} from "./constants";
+import {GET_TEMPLATES, GET_MEMES} from "./constants";
 import {Dispatch} from "redux";
-import {generateMemeArray} from "../utils";
+
 
 export interface MemeTemplate{
   id:string
@@ -10,16 +10,14 @@ export interface GetTemplates{
   payload: MemeTemplate[]
 }
 
-export interface GetDesignView{
-  type: GET_DESIGN_VIEW
-}
 
-export interface GetMemes{
+
+export interface GetMeme{
   type: GET_MEMES,
-  payload: string[]
+  payload: string
 }
 
-export type AppAction = GetTemplates | GetDesignView | GetMemes;
+export type AppAction = GetTemplates | GetMeme;
 export const getTemplates = ()=>(dispatch:Dispatch<GetTemplates>)=> {
     fetch("https://api.imgflip.com/get_memes").then(response=>response.json()).then(data=>{
       const templates = data.data.memes.map((meme:any)=>{
@@ -29,10 +27,35 @@ export const getTemplates = ()=>(dispatch:Dispatch<GetTemplates>)=> {
     });
 }
 
-export const getDesignView = ():GetDesignView => ({type:GET_DESIGN_VIEW});
 
 
-export const getMemes = (templates:MemeTemplate[],name:string):GetMemes => ({
-  type: GET_MEMES,
-  payload:generateMemeArray(templates,name)
-});
+
+export const getMemes = (templates:MemeTemplate[],name:string)=>(dispatch:Dispatch<GetMeme>) => {
+
+  interface Params{
+    [key:string]:string;
+  }
+  for(let i=0;i<templates.length;i++){
+    const id = templates[i].id;
+
+
+    let params:Params = {
+      template_id:id,
+      text0:name,
+      username:"simeonplatonov",
+      password:"1234567S"
+
+    };
+
+    const bodyParams = Object.keys(params).map(key => {
+ return encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
+}).join('&');
+
+    fetch("https://api.imgflip.com/caption_image",{headers:{'Content-Type': "application/x-www-form-urlencoded"},method:"POST",body:bodyParams}).then(response=>response.json())
+    .then(data=>{
+
+      dispatch({type:GET_MEMES,payload:data.data.url});
+
+    });
+  };
+}

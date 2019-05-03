@@ -1,4 +1,4 @@
-import {GET_TEMPLATES,GET_DESIGN_VIEW,GET_MEMES} from "./constants";
+import {GET_TEMPLATES,GET_MEMES} from "./constants";
 import {AppAction,MemeTemplate} from "./actions";
 
 
@@ -21,10 +21,12 @@ export const processAction = (state=initialState,action:AppAction):ClientState =
     switch(action.type){
       case GET_TEMPLATES:
         return {...state,templates:action.payload, hasTemplates:true};
-      case GET_DESIGN_VIEW:
-        return {...state,view:"design"}
+
       case GET_MEMES:
-        return {...state,memes:action.payload}
+
+        state.memes.push(action.payload);
+
+        return {...state,view:"design"};
       default:
         return state;
     }

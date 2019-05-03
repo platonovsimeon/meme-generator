@@ -1,15 +1,15 @@
 import React from 'react';
-import {getTemplates,getDesignView,getMemes,AppAction,MemeTemplate} from "./redux/actions";
+import {getTemplates,getMemes,AppAction,MemeTemplate} from "./redux/actions";
 import {AppState,ClientState} from "./redux/reducers";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 import './App.css';
 
 import Form from "./components/Form";
+import Design from "./components/Design";
 
 interface Props{
   onGetTemplates():MemeTemplate[],
-  onGetDesignView():void,
   onGetMemes(templates:MemeTemplate[],name:string):string[],
   templates:MemeTemplate[],
   hasTemplates:boolean,
@@ -33,7 +33,6 @@ const mapDispatchToProps=(dispatch:AppActionDispatch)=>{
 
   return{
     onGetTemplates:()=>dispatch(getTemplates()),
-    onGetDesignView:()=>dispatch(getDesignView()),
     onGetMemes:(templates:MemeTemplate[],name:string)=>dispatch(getMemes(templates,name))
 
   }
@@ -43,10 +42,11 @@ const mapDispatchToProps=(dispatch:AppActionDispatch)=>{
 
 const App = (props:Props)=> {
 
-    const {templates,hasTemplates,onGetTemplates,onGetDesignView,view,onGetMemes,memes} = props;
+    const {templates,hasTemplates,onGetTemplates,view,onGetMemes,memes} = props;
     const startDesigning = (name:string) =>{
-      onGetDesignView();
       onGetMemes(templates,name);
+
+
 
 
     }
@@ -54,13 +54,12 @@ const App = (props:Props)=> {
       onGetTemplates();
     }
 
-
     return (
       <div className="App">
         {
 
           view==="design"?
-          <h1>Design</h1>
+          <Design memes={memes}/>
           :
           <Form click={startDesigning}/>
         }
