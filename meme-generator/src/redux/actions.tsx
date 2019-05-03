@@ -3,8 +3,7 @@ import {Dispatch} from "redux";
 import {generateMemeArray} from "../utils";
 
 export interface MemeTemplate{
-  id:string,
-  name:string
+  id:string
 }
 export interface GetTemplates{
   type: GET_TEMPLATES,
@@ -24,7 +23,7 @@ export type AppAction = GetTemplates | GetDesignView | GetMemes;
 export const getTemplates = ()=>(dispatch:Dispatch<GetTemplates>)=> {
     fetch("https://api.imgflip.com/get_memes").then(response=>response.json()).then(data=>{
       const templates = data.data.memes.map((meme:any)=>{
-        return {id:meme.id,name:meme.name}
+        return {id:meme.id}
       });
       dispatch({type:GET_TEMPLATES,payload:templates});
     });
@@ -33,7 +32,7 @@ export const getTemplates = ()=>(dispatch:Dispatch<GetTemplates>)=> {
 export const getDesignView = ():GetDesignView => ({type:GET_DESIGN_VIEW});
 
 
-export const getMemes = (templates:MemeTemplate[]):GetMemes => ({
+export const getMemes = (templates:MemeTemplate[],name:string):GetMemes => ({
   type: GET_MEMES,
-  payload:generateMemeArray(templates)
+  payload:generateMemeArray(templates,name)
 });

@@ -10,7 +10,7 @@ import Form from "./components/Form";
 interface Props{
   onGetTemplates():MemeTemplate[],
   onGetDesignView():void,
-  onGetMemes(templates:MemeTemplate[]):string[],
+  onGetMemes(templates:MemeTemplate[],name:string):string[],
   templates:MemeTemplate[],
   hasTemplates:boolean,
   view:string,
@@ -34,7 +34,7 @@ const mapDispatchToProps=(dispatch:AppActionDispatch)=>{
   return{
     onGetTemplates:()=>dispatch(getTemplates()),
     onGetDesignView:()=>dispatch(getDesignView()),
-    onGetMemes:(templates:MemeTemplate[])=>dispatch(getMemes(templates))
+    onGetMemes:(templates:MemeTemplate[],name:string)=>dispatch(getMemes(templates,name))
 
   }
 
@@ -44,9 +44,9 @@ const mapDispatchToProps=(dispatch:AppActionDispatch)=>{
 const App = (props:Props)=> {
 
     const {templates,hasTemplates,onGetTemplates,onGetDesignView,view,onGetMemes,memes} = props;
-    const startDesigning = () =>{
+    const startDesigning = (name:string) =>{
       onGetDesignView();
-      onGetMemes(templates);
+      onGetMemes(templates,name);
 
 
     }
@@ -54,7 +54,7 @@ const App = (props:Props)=> {
       onGetTemplates();
     }
 
-    console.log(memes);
+
     return (
       <div className="App">
         {

@@ -1,16 +1,15 @@
 import {MemeTemplate} from "./redux/actions";
 
 
-export const generateMemeArray = (templates:MemeTemplate[]):string[]=>{
+export const generateMemeArray = (templates:MemeTemplate[],name:string):string[]=>{
     let samples:string[]=[];
+    interface Params{
+      [key:string]:string;
+    }
     for(let i=0;i<templates.length;i++){
-      const template = templates[i];
-      const name = template.name;
-      const id = template.id;
+      const id = templates[i].id;
 
-      interface Params{
-        [key:string]:string;
-      }
+
       let params:Params = {
         template_id:id,
         text0:name,
